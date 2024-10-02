@@ -2,18 +2,22 @@
 
 class UsersController < ApplicationController
   def create
+    # TODO: move this to a private method as seen in the todo_controller, this would improve reusability and follows existing patterns in the application
     user_params = params.require(:user).permit(:name, :email, :password, :password_confirmation)
 
     password = user_params[:password].to_s.strip
     password_confirmation = user_params[:password_confirmation].to_s.strip
 
+    # TODO: can error handling be split into a resuable method for both create and update methods, should include name and email
     errors = {}
     errors[:password] = ["can't be blank"] if password.blank?
     errors[:password_confirmation] = ["can't be blank"] if password_confirmation.blank?
 
+    # TODO: remove outside if block and replace escape clause: example: render_json(422, user: errors) if errors.present?
     if errors.present?
       render_json(422, user: errors)
     else
+      # TODO: replace with escape clause: example: render_json(422, user: { password_confirmation: ["doesn't match password"] }) if password != password_confirmation
       if password != password_confirmation
         render_json(422, user: { password_confirmation: ["doesn't match password"] })
       else

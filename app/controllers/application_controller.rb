@@ -27,6 +27,7 @@ class ApplicationController < ActionController::API
       render_json(400, error: exception.message)
     end
 
+    # TODO: should this method exist in this controller or the users controller?
     def set_todo_lists
       user_todo_lists = current_user.todo_lists
 

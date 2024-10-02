@@ -5,9 +5,11 @@ class TodoList < ApplicationRecord
 
   belongs_to :user, required: true, inverse_of: :todo_lists
 
+  # TODO: are both scopes really necessary?
   scope :default, -> { where(default: true) }
   scope :non_default, -> { where(default: false) }
 
+  # TODO: confusing scope name based on it both sort_by and order
   scope :order_by, ->(params) {
     order = params[:order]&.strip&.downcase == 'asc' ? :asc : :desc
 

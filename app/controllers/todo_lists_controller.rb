@@ -3,6 +3,7 @@
 class TodoListsController < ApplicationController
   before_action :authenticate_user
 
+  # TODO: make sure this isn't querying the entire todo list on every method
   before_action :set_todo_lists
   before_action :set_todo_list, except: [:index, :create]
 
